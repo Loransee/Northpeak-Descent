@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northpeak Descent // Operation Brief</title>
+<meta name="description" content="Community threat hunt for the Cyber Range — a cross-platform valid-account intrusion at Northpeak Logistics. 18 flags across a gate and 5 phases. Built by Dogukan Oruc.">
+<meta name="author" content="Dogukan Oruc">
+<meta property="og:title" content="Northpeak Descent // Operation Brief">
+<meta property="og:description" content="Community threat hunt — an operator held the front door open while everyone watched the noise. Sentinel // MDE, 18 flags, gate + 5 phases.">
+<meta property="og:type" content="website">
+<style>
+/* ── Base shell (replicates the Cyber Range platform backdrop) ── */
+html,body{margin:0;padding:0}
+body{background:#0e0e16;min-height:100vh;position:relative}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(239,68,68,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(239,68,68,0.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#ef4444,transparent);z-index:9999;pointer-events:none}
+.h7{position:relative;z-index:1}
+
+/* ── Original brief styles (as shipped on hunt.lognpacific.com) ── */
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap");.h7 *{font-family:"JetBrains Mono","Courier New",monospace;box-sizing:border-box}.h7{max-width:1100px;margin:0 auto;padding:60px 40px 48px;color:rgba(255,255,255,0.7);font-size:15px;line-height:1.65}.h7-badge{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:#ef4444;border:1px solid rgba(239,68,68,0.3);padding:5px 14px;display:inline-block;margin-bottom:24px}.h7 h1{font-family:"Space Grotesk",sans-serif;font-size:clamp(28px,4.5vw,44px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#fff;margin:0 0 6px;line-height:1.08}.h7 h1 span{color:#ef4444}.h7-sub{font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:1px;margin-bottom:40px;line-height:2;border-left:2px solid rgba(239,68,68,0.25);padding-left:16px;max-width:720px}.h7-chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 32px}.h7-chip{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.75)}.h7-chip.crit{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.35);color:#ef4444}.h7-chip::before{content:'';width:5px;height:5px;background:currentColor;border-radius:50%}.h7-banner{border:1px solid rgba(239,68,68,0.25);padding:32px 36px;margin-bottom:40px;background:linear-gradient(135deg,rgba(239,68,68,0.04) 0%,rgba(239,68,68,0.01) 100%);position:relative}.h7-banner::before,.h7-banner::after{content:'';position:absolute;width:18px;height:18px;border:1px solid #ef4444}.h7-banner::before{top:-1px;left:-1px;border-right:none;border-bottom:none}.h7-banner::after{bottom:-1px;right:-1px;border-left:none;border-top:none}.h7-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.h7-meta div .lbl{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}.h7-meta div .val{font-size:13px;color:rgba(255,255,255,0.85);font-weight:500}.h7-meta div .val.crit{color:#ef4444;font-weight:600}.h7-section{font-family:"Space Grotesk",sans-serif;font-size:16px;font-weight:700;color:#ef4444;letter-spacing:2.5px;text-transform:uppercase;margin:52px 0 24px;padding-bottom:14px;border-bottom:1px solid rgba(239,68,68,0.2);display:flex;align-items:center;justify-content:space-between}.h7-section .count{font-size:11px;color:rgba(255,255,255,0.4);font-weight:400;letter-spacing:2px}.h7-brief{border:1px solid rgba(255,255,255,0.06);padding:28px 32px;margin-bottom:24px;background:rgba(255,255,255,0.02)}.h7-brief-head{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.05)}.h7-brief-head span{color:#ef4444}.h7-from{font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:6px}.h7-from strong{color:rgba(255,255,255,0.7);font-weight:600}.h7-from span{color:#ef4444}.h7-body{font-size:15px;color:rgba(255,255,255,0.8);line-height:1.75;margin-top:20px}.h7-body p{margin:0 0 14px}.h7-body strong{color:#fff}.h7-body code{background:rgba(239,68,68,0.08);color:#ef4444;padding:2px 6px;font-size:13px}.h7-sig{margin-top:24px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.05);font-size:10px;color:rgba(255,255,255,0.4);line-height:1.7}.h7-sig strong{color:#ef4444}.h7-info{background:rgba(255,255,255,0.02);border-left:2px solid rgba(239,68,68,0.3);padding:18px 22px;margin:16px 0;font-size:15px;color:rgba(255,255,255,0.8);line-height:1.65}.h7-info strong{color:#ef4444}.h7-info code{background:rgba(239,68,68,0.08);color:#ef4444;padding:2px 6px;font-size:13px}.h7-method{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;margin-top:8px}.h7-rule{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start;padding:6px 0}.h7-rule .rn{font-size:11px;color:#ef4444;font-weight:700;letter-spacing:1px;padding-top:2px}.h7-rule .rt{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6}.h7-rule .rt strong{color:#fff;font-weight:600}.h7-phase{display:grid;grid-template-columns:70px 1fr;gap:18px;padding:13px 0;border-bottom:1px dashed rgba(255,255,255,0.05)}.h7-phase:last-child{border-bottom:none}.h7-phase .pn{font-size:11px;color:#ef4444;font-weight:700;letter-spacing:1.5px}.h7-phase .pd{font-size:13px;color:rgba(255,255,255,0.75)}.h7-foot{margin-top:60px;padding-top:24px;border-top:1px solid rgba(239,68,68,0.1);font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:2px;text-align:center;line-height:1.9}.h7-foot strong{color:#ef4444;letter-spacing:3px}@media (max-width:900px){.h7{padding:40px 20px 32px}.h7-meta{grid-template-columns:repeat(2,1fr)}.h7-method{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="h7">
+<div class="h7-badge">Northpeak Descent // Operation Brief</div>
+<img src="assets/northpeak-descent-cover.png" alt="Northpeak Descent" onerror="this.style.display='none'" style="width:100%;max-height:300px;object-fit:cover;border:1px solid rgba(239,68,68,0.25);margin:8px 0 28px;display:block;"/>
+<h1>Northpeak <span>Descent</span></h1>
+<p class="h7-sub" style="margin-top:8px;">Community hunt // an operator held the front door open while everyone watched the noise</p>
+<div class="h7-chips">
+<span class="h7-chip crit">Community Hunt</span>
+<span class="h7-chip">Intermediate</span>
+<span class="h7-chip">Sentinel // MDE</span>
+<span class="h7-chip">18 flags // gate + 5 phases</span>
+<span class="h7-chip">Built by Dogukan Oruc</span>
+</div>
+
+<div class="h7-banner">
+<div class="h7-meta">
+<div><div class="lbl">Organisation</div><div class="val crit">Northpeak Logistics</div></div>
+<div><div class="lbl">Platform</div><div class="val">Windows estate + Linux host</div></div>
+<div><div class="lbl">Telemetry</div><div class="val">Microsoft Sentinel // MDE</div></div>
+<div><div class="lbl">Profile</div><div class="val crit">Valid-account intrusion // cross-platform // data theft</div></div>
+<div><div class="lbl">Scope</div><div class="val">Estate-wide</div></div>
+<div><div class="lbl">Window</div><div class="val">Evening of 16 June 2026</div></div>
+</div>
+</div>
+
+<div class="h7-section">IR Brief <span class="count">[ Read first ]</span></div>
+<div class="h7-brief">
+<div class="h7-brief-head">// HUNT ASSIGNMENT <span>// Northpeak Descent</span></div>
+<div class="h7-from"><strong>From:</strong> Hunt Lead <span>// Cyber Range SOC</span></div>
+<div class="h7-from"><strong>To:</strong> Threat Hunt <span>// On-Shift</span></div>
+<div class="h7-from"><strong>Re:</strong> Northpeak Logistics // post-intrusion investigation</div>
+<div class="h7-body">
+<p>Someone got into the <strong>Northpeak Logistics estate</strong> on the evening of 16 June. Multiple footholds, parallel access. The operator held external remote access to the Windows infrastructure and also worked from a Linux host for reconnaissance and tooling. Between roughly 20:00 and 00:30 UTC they moved across the estate, staged tooling, set persistence, beaconed outbound, and reached the crown jewel.</p>
+<p>The logs are loud with failed logons, and it looks like a brute-force break-in. <strong>Do not take that at face value.</strong> The volume is a decoy. The real entry authenticated clean and never tripped a thing.</p>
+<p>What we do not yet know:</p>
+<p>&nbsp;&nbsp;&nbsp;<strong>&middot;</strong> Which foothold came first, and how each host was reached<br>
+&nbsp;&nbsp;&nbsp;<strong>&middot;</strong> The internal pivot path and method<br>
+&nbsp;&nbsp;&nbsp;<strong>&middot;</strong> How persistence was configured, and on which host<br>
+&nbsp;&nbsp;&nbsp;<strong>&middot;</strong> The full C2 infrastructure and how the channel behaved<br>
+&nbsp;&nbsp;&nbsp;<strong>&middot;</strong> What sensitive data left, and from where</p>
+<p>The evidence is in the <strong>law-cyber-range</strong> Sentinel workspace, MDE tables: DeviceProcessEvents, DeviceFileEvents, DeviceNetworkEvents, DeviceRegistryEvents, DeviceLogonEvents, DeviceEvents. Discover the schema yourself with <code>take 1</code> or <code>getschema</code>. Authentication, process, file, registry and network telemetry each live in their own table. Pivot across them.</p>
+<div class="h7-info" style="margin:20px 0;">
+<strong>Filter, or drown.</strong> This is a shared workspace. An unfiltered query returns telemetry from estates that are not yours. Scope every query to the Northpeak hosts: <code>where DeviceName has_any ("npt-ws01","npt-srv01","npt-linux01")</code>. If a result looks like fifty other machines, you forgot the filter.
+</div>
+<p>One thing to hold from the start. The obvious story has the operator landing on Linux first and pivoting into Windows. <strong>Do not assume it.</strong> Put the Windows and Linux entries on one timeline and prove the order yourself. It is not what the shape of the data suggests at a glance.</p>
+<p>Work it end to end. <strong>Reconstruct</strong> the intrusion, every access vector and its source, the pivot, the persistence, the C2, and the theft. <strong>Reason</strong> where the evidence is thin, some of the strongest findings here are things that did not happen. Then build the chain, entry to pivot to persistence to command-and-control to impact.</p>
+<p>Section 00 is a gate. Confirm you are set up on the right workspace before you start. The phrase to submit is in this brief: <strong>Northpeak hunter ready</strong>. Acknowledge it, then begin.</p>
+<p>Get hunting.</p>
+<div class="h7-sig">
+<strong>// Hunt Lead</strong><br>
+Cyber Range SOC &middot; Community hunt built by Dogukan Oruc
+</div>
+</div>
+</div>
+
+<div class="h7-info">
+<strong>Your workspace.</strong> All telemetry for this hunt lives in the <code>law-cyber-range</code> Sentinel workspace. Open it, confirm you can query it, and remember the host filter on every query.<br><br>
+<a href="https://portal.azure.com/#view/Microsoft_Azure_Security_Insights/MainMenuBlade/~/3/id/%2Fsubscriptions%2F3c95e63a-895a-4386-991e-edbbf57de5c8%2Fresourcegroups%2Fcyber-range-admin-soc%2Fproviders%2Fmicrosoft.securityinsightsarg%2Fsentinel%2Flaw-cyber-range" target="_blank" rel="noopener" style="color:#ef4444;text-decoration:none;font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:11px;">&rarr; Open the law-cyber-range workspace</a>
+</div>
+
+<div class="h7-section">How To Hunt This <span class="count">[ method, not answers ]</span></div>
+<div class="h7-brief" style="padding:24px 32px;">
+<div class="h7-body" style="margin-top:0;margin-bottom:18px;">
+<p>A cross-platform intrusion worked end to end, Windows and Linux together. This is method. It will help you, it will not solve it for you.</p>
+</div>
+<div class="h7-method">
+<div class="h7-rule"><div class="rn">01</div><div class="rt"><strong>Filter first, every time.</strong> Scope to the Northpeak hosts before you read a single row. An unfiltered result is someone else's estate.</div></div>
+<div class="h7-rule"><div class="rn">02</div><div class="rt"><strong>Separate signal from noise.</strong> The failed-logon storm is bait. Work only what succeeded, and only from outside.</div></div>
+<div class="h7-rule"><div class="rn">03</div><div class="rt"><strong>Prove the order, do not assume it.</strong> Two platforms, several footholds. Put them on one timeline and let the timestamps decide which came first.</div></div>
+<div class="h7-rule"><div class="rn">04</div><div class="rt"><strong>Pivot on identity and source.</strong> One account and one address thread the whole case. When either shows up where it should not, follow it.</div></div>
+<div class="h7-rule"><div class="rn">05</div><div class="rt"><strong>Separate the human from the machine.</strong> Most of the estate's activity is automation. Learn what the operator's hands-on-keyboard work looks like against the noise.</div></div>
+<div class="h7-rule"><div class="rn">06</div><div class="rt"><strong>The network view is not the whole channel.</strong> A connection that is not logged still leaves a trace where it was launched. If one console is blind, that blindness is a finding.</div></div>
+<div class="h7-rule"><div class="rn">07</div><div class="rt"><strong>Treat absence as evidence.</strong> What they did not do matters. No tampering, nothing dropped, reason from the gap to how they stayed quiet.</div></div>
+<div class="h7-rule"><div class="rn">08</div><div class="rt"><strong>Then tell the story.</strong> The finish is the chain, entry to pivot to persistence to C2 to impact, and what the evidence and its gaps prove.</div></div>
+</div>
+</div>
+
+<div class="h7-section">Hunt Stages <span class="count">[ gate + 5 phases ]</span></div>
+<div class="h7-brief" style="padding:22px 32px;">
+<div class="h7-phase"><div class="pn">00</div><div class="pd"><strong style="color:#fff;">Setup gate</strong> &mdash; confirm you are on the <code>law-cyber-range</code> workspace. Acknowledge readiness with the phrase from this brief.</div></div>
+<div class="h7-phase"><div class="pn">01</div><div class="pd"><strong style="color:#fff;">Initial access</strong> &mdash; the real entry, the order of the footholds, the operator's own client, and how the server was reached.</div></div>
+<div class="h7-phase"><div class="pn">02</div><div class="pd"><strong style="color:#fff;">Linux recon &amp; tooling</strong> &mdash; escalation checks, reachability testing without a scanner, and what they installed to pivot.</div></div>
+<div class="h7-phase"><div class="pn">03</div><div class="pd"><strong style="color:#fff;">Pivot, execution, persistence</strong> &mdash; the internal hop, the operator's hands-on shells against the noise, and what they planted to survive a reboot.</div></div>
+<div class="h7-phase"><div class="pn">04</div><div class="pd"><strong style="color:#fff;">Command &amp; control</strong> &mdash; the look-alike channel, the one domain the network saw, the hidden two, and what the rhythm proves.</div></div>
+<div class="h7-phase"><div class="pn">05</div><div class="pd"><strong style="color:#fff;">Impact &amp; judgement</strong> &mdash; the theft, the session it left in, and the model that let them run this freely without touching the security stack.</div></div>
+</div>
+
+<div class="h7-info">
+<strong>Note on the absence.</strong> Some of the strongest findings here are things that did not happen. When a table you expect to be busy comes back quiet, that quiet is data, it usually means a stealthier method, not that nothing occurred. Reason from the gap, do not close on it.
+</div>
+
+<div style="margin:60px 0 24px;text-align:center;padding:40px 0 0;border-top:1px solid rgba(239,68,68,0.12);">
+<div style="font-size:10px;letter-spacing:5px;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:22px;font-weight:600;">// Ready to begin</div>
+<a href="https://hunt.lognpacific.com/hunt-10-brief" target="_blank" rel="noopener" style="display:inline-block;padding:20px 64px;font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:5px;text-transform:uppercase;font-weight:700;text-decoration:none;background:#ef4444;color:#ffffff;border:none;">PLAY THIS HUNT</a>
+<div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:20px;letter-spacing:1px;line-height:1.7;">
+This is the portfolio copy of the operation brief. The hunt runs live on the Cyber Range.<br><br>
+<a href="https://hunt.lognpacific.com/hunt-10-brief" target="_blank" rel="noopener" style="color:#ef4444;text-decoration:none;font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:11px;">&rarr; hunt.lognpacific.com/hunt-10-brief</a>
+</div>
+</div>
+
+<div class="h7-foot">
+<strong>// NORTHPEAK DESCENT //</strong><br>
+Community Hunt // Cross-Platform Valid-Account Intrusion<br>
+<span style="opacity:0.6;">Northpeak Logistics // built by Dogukan Oruc</span>
+</div>
+</div>
+</body>
+</html>
