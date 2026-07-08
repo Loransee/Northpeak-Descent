@@ -59,7 +59,7 @@ A few things I built into this hunt deliberately:
 
 ## View the brief
 
-**Live page:** [loransee.github.io/Northpeak-Descent](https://loransee.github.io/Northpeak-Descent/) *(hosted with GitHub Pages)*
+**Live page:** [loransee.github.io/Northpeak-Descent](https://loransee.github.io/northpeak-descent/) *(hosted with GitHub Pages)*
 
 Or open `index.html` locally in any browser — it has no dependencies beyond Google Fonts.
 
